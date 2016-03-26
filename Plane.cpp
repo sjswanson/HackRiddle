@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 class Plane {
 	const string name;
 	int fuel;
@@ -16,6 +18,7 @@ class Plane {
 		void die() {alive=false;};
 		void setFuel(int newFuel) {fuel=newFuel;};
 		int getLevel() {return level;};
+		bool getAlive() {return alive;};
 }
 
 public Plane() {
@@ -23,7 +26,7 @@ public Plane() {
 	string playerInput;
 	cin>>playerInput;
 	name=playerInput;
-	alive=true;
+	alive=true; 
 	turnsSurvived=0;
 	level=0;
 }
@@ -36,4 +39,14 @@ public void Plane::nextTurn() {
 	else {
 		fuel--;
 	}
+}
+
+int main() {
+	cout<<"Welcome to Embry Riddle Aeronautical Boot Camp for Trying to Fly a Plane"<<endl;
+	Plane play=new Plane();
+	while (play.getAlive()) {
+		play.nextTurn();
+		//determine event things and change fuel and stuff
+	}
+	cout<<"Congrats you died"<<endl;
 }
