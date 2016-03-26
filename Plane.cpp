@@ -12,10 +12,12 @@ class Plane {
 	bool alive;
 	int level;
 	public:
-		Plane(string playerName) {name=playerName;alive=true;turnsSurvived=0;level=0;};
+		Plane() {};
+		void setName(string playerName) {name = playerName;};
+		void setAlive(bool doa){alive = doa;};
 		void nextTurn();
-		bool getStatus() {return alive;};
 		string getName() {return name;};
+		void setTurns() {turnsSurvived = 0;};
 		int getTurns() {return turnsSurvived;};
 		void die() {alive=false;};
 		void setFuel(int newFuel) {fuel=newFuel;};
@@ -41,29 +43,30 @@ class Event {
 	string description;
 	int fuelEffect;
 	int fuelLikely;
-	Plane plane;
+	Plane lePlane;
 	public:
-		Event(int likely,int survival,string describe,int fuelChange,int doesFuelChange);
+		Event(int, int, string, int, int, Plane);
 		void causeEffect();
-		void setPlane(Plane newPlane) {plane=newPlane;};
 };
 
-Event::Event(int likely,int survival,string describe,int fuelChange,int doesFuelChange) {
+Event::Event(int likely,int survival,string describe,int fuelChange,int doesFuelChange, Plane newPlane) {
 	likelyIndex=likely;
 	death=survival;
 	description=describe;
 	fuelEffect=fuelChange;
 	fuelLikely=doesFuelChange;
+	lePlane=newPlane;
+	
 }
 
 void Event::causeEffect() {
 	srand(time(NULL));
 	if (rand()%100<death) {
-		plane.die();
+		lePlane.die();
 	}
 	else {
 		if (rand()%100<fuelLikely) {
-			plane.setFuel(plane.getFuel()+fuelEffect);
+			lePlane.setFuel(lePlane.getFuel()+fuelEffect);
 		}
 	}
 	
@@ -74,12 +77,11 @@ int main() {
 	cout<<"Enter your name: ";
 	string playerInput;
 	cin>>playerInput;
-	Plane play=new Plane(playerInput);
-	Event meh=new Event(100,50,"Meh",-10,80);
-	meh.setPlane(play);
-	while (play.getAlive()) {
-		play.nextTurn();
-		meh.causeEffect();
+	Plane *play=new Plane();
+	Event *meh=new Event(100,50,"Meh",-10,80, *play);
+	while (play->getAlive()) {
+		play->nextTurn();
+		meh->causeEffect();
 	}
 	cout<<"RIP your flying abilities"<<endl;
 }
