@@ -6,16 +6,16 @@ class Plane {
 	int fuel;
 	int turnsSurvived;
 	bool alive;
-	bool inSpace;
+	int level;
 	public:
 		Plane();
 		void nextTurn();
 		bool getStatus() {return alive;};
 		string getName() {return name;};
 		int getTurns() {return turnsSurvived;};
-		void die() {alive=dead;};
+		void die() {alive=false;};
 		void setFuel(int newFuel) {fuel=newFuel;};
-		bool getInSpace() {return inSpace;};
+		int getLevel() {return level;};
 }
 
 public Plane() {
@@ -25,11 +25,12 @@ public Plane() {
 	name=playerInput;
 	alive=true; 
 	turnsSurvived=0;
+	level=0;
 }
 
 public void Plane::nextTurn() {
 	turnsSurvived++;
-	if (getInSpace) {
+	if (fuel==2) {
 		fuel-=2;
 	}
 	else {
