@@ -19,11 +19,11 @@ class Plane {
 }
 
 public Plane() {
-	cout<<"Enter a name for your plane: ";
+	cout<<"Enter your name: ";
 	string playerInput;
 	cin>>playerInput;
 	name=playerInput;
-	alive=true; 
+	alive=true;
 	turnsSurvived=0;
 	level=0;
 }
