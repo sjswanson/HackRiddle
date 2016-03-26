@@ -38,25 +38,23 @@ void Plane::nextTurn() {
 }
 
 class Event {
-	int likelyIndex;
 	int death;
 	string description;
 	int fuelEffect;
 	int fuelLikely;
 	Plane lePlane;
 	public:
-		Event(int, int, string, int, int, Plane);
+		Event(int, string, int, int, Plane);
 		void causeEffect();
 };
 
-Event::Event(int likely,int survival,string describe,int fuelChange,int doesFuelChange, Plane newPlane) {
-	likelyIndex=likely;
-	death=survival;
+Event::Event(int deathRate,string describe,int fuelChange,int doesFuelChange, Plane newPlane) {
+	death=deathRate;
 	description=describe;
 	fuelEffect=fuelChange;
 	fuelLikely=doesFuelChange;
 	lePlane=newPlane;
-	
+
 }
 
 void Event::causeEffect() {
@@ -69,7 +67,41 @@ void Event::causeEffect() {
 			lePlane.setFuel(lePlane.getFuel()+fuelEffect);
 		}
 	}
-	
+
+}
+
+void generateEvent(){
+	srand(time(NULL));
+	if (rand()%100<5){
+		string desc = "Your engine has failed";
+		int dead = 40;
+		int fc = -5;
+		int dfc = 20;
+	}
+	else if(rand()%100<10){
+		string desc = "A hostile plane has attacked you";
+		int dead = 30;
+		int fc = 0;
+		int dfc = 0;
+	}
+	else if(rand()%100<40){
+		string desc = "Hey, look, a bird outside the cockpit";
+		int dead = 0;
+		int fc = 4;
+		int dfc = 40;
+	}
+	else if(rand()%100<70){
+		string desc = "Asthma attack";
+		int dead = 15;
+		int fc = -2;
+		int dfc = 50;
+	}
+	else if(rand()%100<100){
+		string desc = "All clear";
+		int dead = 0;
+		int fc = 1;
+		int dfc = 15;
+	}
 }
 
 int main() {
@@ -78,7 +110,7 @@ int main() {
 	string playerInput;
 	cin>>playerInput;
 	Plane *play=new Plane();
-	Event *meh=new Event(100,50,"Meh",-10,80, *play);
+	Event *meh=new Event(50,"Meh",-10,80, *play);
 	while (play->getAlive()) {
 		play->nextTurn();
 		meh->causeEffect();
