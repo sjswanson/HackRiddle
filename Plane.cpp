@@ -6,6 +6,7 @@ class Plane {
 	int fuel;
 	int turnsSurvived;
 	bool alive;
+	bool inSpace;
 	public:
 		Plane();
 		void nextTurn();
@@ -14,6 +15,7 @@ class Plane {
 		int getTurns() {return turnsSurvived;};
 		void die() {alive=dead;};
 		void setFuel(int newFuel) {fuel=newFuel;};
+		bool getInSpace() {return inSpace;};
 }
 
 public Plane() {
@@ -27,5 +29,10 @@ public Plane() {
 
 public void Plane::nextTurn() {
 	turnsSurvived++;
-	fuel--;
+	if (getInSpace) {
+		fuel-=2;
+	}
+	else {
+		fuel--;
+	}
 }
