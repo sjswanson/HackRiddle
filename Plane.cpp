@@ -39,33 +39,50 @@ void Plane::nextTurn() {
 		fuel--;
 	}
 	cout << "Fuel remaining: " << fuel << endl;
+<<<<<<< HEAD
 	cout << "Health remaining: " << hp <<endl;
 	if(fuel <= 0){alive = false;}
 	if(hp <= 0){alive = false;}
+=======
+	if(fuel <= 0){alive = false;}
+>>>>>>> 8048f3fe68504df4e3238aadd27df1d82c44bf7b
 }
 
 class Event {
 	int death;
 	string description;
 	int fuelEffect;
+<<<<<<< HEAD
 	int healthEffect;
+=======
+	int fuelLikely;
+>>>>>>> 8048f3fe68504df4e3238aadd27df1d82c44bf7b
 	Plane * lePlane;
 	public:
 		Event(int, string, int, int, Plane*);
 		void causeEffect();
 };
 
+<<<<<<< HEAD
 Event::Event(int deathRate,string describe,int fuelChange,int healthChange, Plane * newPlane) {
 	death=deathRate;
 	description=describe;
 	fuelEffect=fuelChange;
 	healthEffect=healthChange;
+=======
+Event::Event(int deathRate,string describe,int fuelChange,int doesFuelChange, Plane * newPlane) {
+	death=deathRate;
+	description=describe;
+	fuelEffect=fuelChange;
+	fuelLikely=doesFuelChange;
+>>>>>>> 8048f3fe68504df4e3238aadd27df1d82c44bf7b
 	lePlane= newPlane;
 
 }
 
 void Event::causeEffect() {
 
+<<<<<<< HEAD
 	if (rand()%100<death) {
 		lePlane->die();
 	}
@@ -73,6 +90,29 @@ void Event::causeEffect() {
 	{
 		lePlane->setFuel(lePlane->getFuel()+fuelEffect);
 		lePlane->setHP(lePlane->getHP()+healthEffect);
+=======
+	cout << description << endl;
+	string decision;
+	cin >> decision;
+	if (decision!="a"&&decision!="A"&&decision!="b"&&decision!="B") {
+		cout << "Not a valid choice!!!!" << endl;
+		lePlane->die();
+		//lePlane->setFuel(-1);
+		return;
+		//cin>>decision;
+	}
+	if(decision == "a" || decision == "A")
+	{cout << "Good Choice!" << endl;}
+	else if (decision == "b" || decision == "B")
+	 {cout << "Bad Choice" << endl;}
+	if (rand()%100<death) {
+		lePlane->die();
+	}
+	else {
+		if (rand()%100<fuelLikely) {
+			lePlane->setFuel(lePlane->getFuel()+fuelEffect);
+		}
+>>>>>>> 8048f3fe68504df4e3238aadd27df1d82c44bf7b
 	}
 }
 
@@ -288,6 +328,7 @@ else if (decision == "b" || decision == "B")
 return meh;
 }
 
+<<<<<<< HEAD
 Event* generateSpace(Plane* play) {
 
 int dead =0;
@@ -482,17 +523,83 @@ else if (decision == "b" || decision == "B")
  { cout<< choice2 <<endl;
 	 meh=new Event(dead,desc, fc2, hc2, play);}
 return meh;
+=======
+Event* generateEvent(Plane* play){
+
+	  int dead =0;
+		int fc = 0;
+		int dfc = 0;
+		string desc ="";
+		int randnum = rand()%100;
+	if (randnum<1) {
+		desc="Your plane has spontaneously disassembled itself";
+		fc=0;
+		dfc=100;
+		dead=100;
+	}
+	else if (randnum< 5){
+		desc = "Your engine has failed";
+		dead = 40;
+		fc = -5;
+		dfc = 20;
+	}
+	else if(randnum<10){
+		desc = "A hostile plane has attacked you";
+		dead = 30;
+		fc = 0;
+		dfc = 0;
+	}
+	else if(randnum<20){
+		desc = "Hey, look, a bird outside the cockpit";
+		dead = 0;
+		fc = 4;
+		dfc = 40;
+	}
+	else if(randnum<40){
+		desc = "Asthma attack";
+		dead = 15;
+		fc = 0;
+		dfc = 0;
+	}
+	else if (randnum<60) {
+		desc="Crying baby";
+		dead=2;
+		fc=-1;
+		dfc=10;
+	}
+	else if(randnum<100){
+		desc = "All clear";
+		dead = 0;
+	  fc = 1;
+		dfc = 15;
+	}
+
+	Event* meh=new Event(dead,desc, fc, dfc, play);
+	return meh;
+};
+/*
+Event* generateEarth(Plane play) {
+
+>>>>>>> 8048f3fe68504df4e3238aadd27df1d82c44bf7b
 }
 
+Event* generateSpace(Plane play) {
+
+}
+*/
 int main() {
 	cout<<"Welcome to Embry Riddle Aeronautical Boot Camp for Trying to Fly a Plane"<<endl;
 	cout<<"Enter your name: ";
+<<<<<<< HEAD
 	bool saidIt = false;
+=======
+>>>>>>> 8048f3fe68504df4e3238aadd27df1d82c44bf7b
 	srand(time(NULL));
 	string playerInput;
 	cin>>playerInput;
 	Plane* play=new Plane();
 	play->setFuel(20);
+<<<<<<< HEAD
 	play->setHP(100);
 	play->setAlive(true);
 	play->setLevel(1);
@@ -518,5 +625,26 @@ int main() {
 		cout<<"You ran out of HP, and died" <<endl;
 	}
 	cout<< playerInput << ", you need to work on your flying abilities"<<endl;
+=======
+	play->setAlive(true);
+	play->setLevel(1);
+	while (play->getAlive()) {
+		/*
+		if (play->getLevel()==1) {
+			Event* meh=generateEarth(*play);
+		}
+		else {
+			Event* meh=generateSpace(*play);
+		}
+		*/
+		Event* meh= generateEvent(play);
+		meh->causeEffect();
+		play->nextTurn();
+		if (play->getTurns()>=15) {//space travel
+			play->setLevel(2);
+		}
+	}
+	cout<<"RIP your flying abilities"<<endl;
+>>>>>>> 8048f3fe68504df4e3238aadd27df1d82c44bf7b
 	cout<<"You survived "<<play->getTurns()<<" turns"<<endl;
 }
